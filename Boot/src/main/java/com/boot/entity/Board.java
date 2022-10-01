@@ -44,5 +44,20 @@ public class Board {
         this.hits = hits;
         this.deleteYn = deleteYn;
     }
+    
+    public void update(String title, String content, String writer) {
+    	this.title = title;
+    	this.content = content;
+    	this.writer = writer;
+    	this.modifiedDate = LocalDateTime.now();
+    }
+    
+    public void increaseHits() {
+    	this.hits++;
+    }
+    
+    public void delete() {
+    	this.deleteYn = 'Y';
+    }
 
 }

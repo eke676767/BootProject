@@ -12,4 +12,5 @@ public class CommonParams {
     private int pageSize;
     private String keyword;
     private String searchType;
+    private Pagination pagination;
 }

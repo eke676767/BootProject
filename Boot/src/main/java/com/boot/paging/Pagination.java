@@ -14,7 +14,10 @@ public class Pagination {
 	private boolean existNextPage;
 
 	public Pagination(int totalRecordCount, CommonParams params) {
-		
+		if(totalRecordCount > 0) {
+			this.totalRecordCount = totalRecordCount;
+			this.calculation(params);
+		}
 	}
 	
 	public void calculation(CommonParams params) {

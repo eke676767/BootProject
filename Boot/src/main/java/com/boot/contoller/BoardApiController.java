@@ -1,6 +1,7 @@
 package com.boot.contoller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import com.boot.dto.BoardResponseDto;
 import com.boot.exception.CustomException;
 import com.boot.exception.ErrorCode;
 import com.boot.model.BoardService;
+import com.boot.paging.CommonParams;
 
 import lombok.RequiredArgsConstructor;
 
@@ -35,8 +37,8 @@ public class BoardApiController {
 	
 	//게시글 리스트 조회
 	@GetMapping("/boards")
-	public List<BoardResponseDto> findAll(@RequestParam final char deleteYn){
-		return boardService.findAllByDeleteYn(deleteYn);
+	public Map<String, Object> findAll(final CommonParams params){
+		return boardService.findAll(params);
 	}
 	
 	//게시글 수정

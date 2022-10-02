@@ -26,7 +26,7 @@
 			</div>
 
 			<div class="btn_wrap text-center">
-				<a th:href="@{/board/list}" class="btn btn-default waves-effect waves-light">뒤로가기</a>
+				<a href="javascript: void(0);" onclick="goList();" class="btn btn-default waves-effect waves-light">뒤로가기</a>
 				<button type="button" onclick="save();" class="btn btn-primary waves-effect waves-light">저장하기</button>
 			</div>
 		</form>
@@ -37,6 +37,11 @@
     <th:block layout:fragment="script">
     <script th:inline="javascript">
 	/*<![CDATA[*/
+		
+        function goList() {
+            const id = /*[[ ${id} ]]*/;
+            location.href = (id) ? '/board/list' + location.search : '/board/list';
+        }
 		
 		//유효성검사
 		function isValid(){
@@ -66,43 +71,42 @@
 			return true;
 		}
 		
-		function save() {
+        function save() {
 
-			if ( !isValid() ) {
-				return false;
-			}
+        	if ( !isValid() ) {
+        		return false;
+        	}
 
-			const form = document.getElementById('form');
-			const params = {
-				title: form.title.value,
-				writer: form.writer.value,
-				content: form.content.value,
-				deleteYn: 'N'
-			};
-			const id =/*[[ ${id} ]]*/;
-			const uri = ( id ) ? `/api/boards/${id}` : '/api/boards';
-			const method = ( id ) ? 'PATCH' : 'POST';
- 			
-			
-			fetch(uri, {
-				method: method,
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(params)
+        	const form = document.getElementById('form');
+        	const params = {
+        		title: form.title.value,
+        		writer: form.writer.value,
+        		content: form.content.value,
+        		deleteYn: 'N'
+        	};
 
-			}).then(response => {
-				if (!response.ok) {
-					throw new Error('Request failed...');
-				}
+        	const id = /*[[ ${id} ]]*/;
+        	const uri = ( id ) ? `/api/boards/${id}` : '/api/boards';
+        	const method = ( id ) ? 'PATCH' : 'POST';
 
-				alert('저장되었습니다.');
-				location.href = '/board/list';
+        	fetch(uri, {
+        		method: method,
+        		headers: { 'Content-Type': 'application/json' },
+        		body: JSON.stringify(params)
+ 
+        	}).then(response => {
+        		if (!response.ok) {
+        			throw new Error('Request failed...');
+        		}
 
-			}).catch(error => {
-				alert('오류가 발생하였습니다.');
-			});
-		}
+        		alert('저장되었습니다.');
+        		goList();
+
+        	}).catch(error => {
+        		alert('오류가 발생하였습니다.');
+        	});
+        }
+
 	/*]]>*/
     </script>
     </th:block>
